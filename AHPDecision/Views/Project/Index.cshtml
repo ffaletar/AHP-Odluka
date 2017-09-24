@@ -1,0 +1,173 @@
+﻿
+@model AHPDecision.ViewModels.ProjectViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content" style="padding: 0;">
+    <div class="row">
+        <section class="sidebar col-md-4" style="background-color: #222d32; position:fixed; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; height: 100%;">
+            <div class="row" style="height: 45%;">
+                <div class="user-panel">
+                    <h2 style="color: #dbdbdb;">
+                        @Model.Project.naziv
+                    </h2>
+                </div>
+
+                <div style="background-color: rgb(41, 54, 60); padding: 20px;">
+                    @{ var link = "/Evaluation/Index?id=" + Model.Project.id; }
+                    <a href=@link class="btn btn-app" style="color:#222d32!important;">
+                        <i class="fa fa-play"></i> Evaluiraj kriterije
+                    </a>
+
+                    @{ var link2 = "/Evaluation/Alternatives?projekt=" + Model.Project.id + "&kriterij=-1"; }
+                    <a href=@link2 class="btn btn-app" style="color:#222d32!important;">
+                        <i class="fa fa-play"></i> Evaluiraj alternative
+                    </a>
+
+                    @{ var link3 = "/Project/Result?id=" + Model.Project.id; }
+                    <a href=@link3  class="btn btn-app" style="color:#222d32!important;">
+                        <i class="fa fa-save"></i> Rezultati
+                    </a>
+                    <a class="btn btn-app pull-right box-danger col-sm-3" data-toggle="modal" data-target="#modal-deleteProject" style="color:#222d32!important;">
+                        <i class="fa ion-android-delete"></i> Ukloni projekt
+                    </a>
+                </div>
+
+                <div style="color:#cbc9c9; padding: 10px;">
+                    <h4>
+                        Opis projekta
+                    </h4>
+                    <p>
+                        @Model.Project.opis
+                    </p>
+                </div>
+                <h4 class="box-title" style="color: #9c9fa1; padding: 10px;">Alternative</h4>
+
+            </div>
+            <div class="row scroll-main" style="height: 45%; direction: ltr;">
+                <ul class="todo-list ui-sortable" style="color: #f1f1f1; padding: 0px; height: 100%;">
+
+                    @if (Model.Alternatives.Count() == 0)
+                    {
+                        <div class="text-center">
+                            <h3>Trenutno ne postoje alternative</h3>
+                            <small>Dodaj novu alternativu</small>
+                        </div>
+                    }
+                    else
+                    {   
+                        foreach (AHPDecision.Models.Alternativa alternative in Model.Alternatives)
+                        {
+                            <li class="header list-view-gray">
+                                <i class="fa ion-arrow-right-b"></i>
+                                <span class="text">@alternative.naziv</span>
+                                @if (alternative.vrijednost != null)
+                                {
+                                    <small class="label label-info"><i class="fa fa-clock-o"></i>@alternative.vrijednost</small>
+                                }
+                                <div class="tools">
+                                    <a title="Uredi alternativu" unselectable="on">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a title="Ukloni alternativu" unselectable="on">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+            <div class="row" style="height: 10%;">
+                <a class="btn btn-block btn-social btn-github" data-toggle="modal" data-target="#modal-default">
+                    <i class="fa fa-plus"></i> Nova alternativa
+                </a>
+
+
+            </div>
+        </section>
+        <div class="col-md-8 col-lg-offset-4">
+            @{
+                Html.RenderPartial("_ContentHeaderPartial", Model.ContentHeader);
+            }
+
+            <section class="content">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        @if (Model.Criteria.Count == 0 || Model == null)
+                        {
+                            <div class="text-center">
+                                <h3>Trenutno ne postoje kriteriji</h3>
+                                <a class="btn btn-block btn-default btn-flat" data-toggle="modal" data-target="#modal-newCriteria">
+                                    <i class="fa fa-plus"></i>     Dodaj novi kriterij
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="box-body">
+                                @{int idRoditelja = 0; }
+                                <ul class="todo-list ui-sortable">
+                                    @if (Model.Criteria.FirstOrDefault().idRoditelja == null)
+                                        {
+                                            idRoditelja = 0;
+                                        }
+                                        else
+                                        {
+                                            idRoditelja = (int)Model.Criteria.FirstOrDefault().idRoditelja;
+                                        }
+                                    @{ List<int> listaPregledanihKriterija = new List<int>();}
+                                    @{ int brojPredaka = 0;}
+
+                                    @*                           @Treeview.GetTreeView(Model.ListaKriterija, Model.Projekt.id, idRoditelja, listaPregledanihKriterija, brojPredaka, 0)*@
+
+
+                                    @TreeviewCriteria.GetTreeView(Model.Criteria.Where(x => x.idRoditelja == null).ToList());
+
+
+
+                                    <li class="text-center">
+                                        <a class="btn btn-block btn-default btn-flat" data-toggle="modal" data-target="#modal-newCriteria">
+                                            <i class="fa fa-plus"></i>     Dodaj novi kriterij
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade in" id="modal-deleteCriteria" style="display: none; padding-right: 17px;">
+
+    @Html.Partial("_DialogDeleteCriteriaPartial")
+
+</div>
+<div class="modal fade in" id="modal-deleteProject" style="display: none; padding-right: 17px;">
+
+    @Html.Partial("_DialogDeleteProjectPartial", Model.Project.id)
+
+</div>
+
+<div class="modal fade in" id="modal-default" style="display: none; padding-right: 17px;">
+
+    @Html.Partial("_DialogNewAlternativePartial", Model.Project.id)
+
+</div>
+
+<div class="modal fade in" id="modal-newCriteria" style="display: none; padding-right: 17px;">
+
+    @Html.Partial("_DialogNewCriteriaPartial", Model.Project.id)
+
+</div>

@@ -1,0 +1,35 @@
+﻿@model AHPDecision.ViewModels.EvaluationCriteriaViewModel
+
+
+<section class="sidebar col-md-4" style="background-color: #222d32; position:fixed; padding-left: 0px; padding-right: 0px; height: 100%;">
+    <div class="user-panel" style="height: 20%;">
+        <h2 style="color: #dbdbdb;">
+            <a href="/Evaluation/Index?id=@Model.Projekt.id">
+                @Model.Projekt.naziv
+                @if (Model.Projekt.konzistentno == true)
+                {
+                    <i class="fa fa-2x fa-check-circle pull-left"></i>
+                }
+                else
+                {
+                    <i class="fa fa-2x fa-window-close pull-left"></i>
+                }
+            </a>
+        </h2>
+
+    </div>
+    
+    @*<div class="scroll-main" style="height: 87%; direction: ltr;">*@
+        <ul class="sidebar-menu tree" data-widget="tree">
+            @if (Model.KriterijRoditelj != null)
+            {
+                @TreeviewCriteriaMenu.GetTreeviewCriteriaMenu(Model.ListaKriterija, Model.KriterijRoditelj.id)
+            }
+            else
+            {
+                @TreeviewCriteriaMenu.GetTreeviewCriteriaMenu(Model.ListaKriterija, -1)
+            }
+        </ul>
+    @*</div>*@
+
+</section>

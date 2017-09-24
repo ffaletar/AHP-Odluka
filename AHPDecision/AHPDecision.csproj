@@ -44,6 +44,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -52,6 +80,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -168,38 +198,143 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EvaluationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Helpers\CustomAuthorization.cs" />
+    <Compile Include="Helpers\DBOperationsHelper.cs" />
+    <Compile Include="Helpers\Executor.cs" />
+    <Compile Include="Models\AHPModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AHPModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AHPModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AHPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AHPModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AHPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Alternativa.cs">
+      <DependentUpon>AHPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlternativaKriterij.cs">
+      <DependentUpon>AHPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Dnevnik.cs">
+      <DependentUpon>AHPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FazaProjekta.cs">
+      <DependentUpon>AHPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Korisnik.cs">
+      <DependentUpon>AHPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Kriterij.cs">
+      <DependentUpon>AHPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Projekt.cs">
+      <DependentUpon>AHPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TipZapisa.cs">
+      <DependentUpon>AHPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsporedbaAlternativaPremaKriteriju.cs">
+      <DependentUpon>AHPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsporedbaKriterija.cs">
+      <DependentUpon>AHPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\Account\AccountViewModels.cs" />
+    <Compile Include="ViewModels\Helpers\ContentHeader.cs" />
+    <Compile Include="ViewModels\Project\CalculatedCriteriaValuesViewModel.cs" />
+    <Compile Include="ViewModels\Project\CriteriaALternativesWithValuesViewModel.cs" />
+    <Compile Include="ViewModels\Project\AlternativesComparedViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="ViewModels\Project\CriteriaTreeViewModel.cs" />
+    <Compile Include="ViewModels\Evaluation\EvaluationAlternativesViewModel.cs" />
+    <Compile Include="ViewModels\Evaluation\EvaluationCriteriaViewModel.cs" />
+    <Compile Include="ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\Project\CriteriaParentsGroupedByLevelsViewModel.cs" />
+    <Compile Include="ViewModels\Account\ManageViewModels.cs" />
+    <Compile Include="ViewModels\Project\ProjectViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\AdminLTE.css" />
+    <Content Include="Content\css\AdminLTE.min.css" />
+    <Content Include="Content\css\bootstrap-theme.css" />
+    <Content Include="Content\css\bootstrap-theme.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\ionicons.css" />
+    <Content Include="Content\css\ionicons.min.css" />
+    <Content Include="Content\css\slider.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\ionicons.svg" />
+    <Content Include="Content\js\adminlte.js" />
+    <Content Include="Content\js\adminlte.min.js" />
+    <Content Include="Content\js\app.js" />
+    <Content Include="Content\js\app.min.js" />
+    <Content Include="Content\js\bootstrap-slider.js" />
+    <Content Include="Content\js\bootstrap.js" />
+    <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\demo.js" />
+    <Content Include="Content\js\evaluation.js" />
+    <Content Include="Content\js\jquery\jquery.slimscroll.js" />
+    <Content Include="Content\js\jquery\jquery.slimscroll.min.js" />
+    <Content Include="Content\js\modernizr-2.6.2.js" />
+    <Content Include="Content\js\site.js" />
+    <Content Include="Content\skins\skin-green.css" />
+    <Content Include="Content\skins\skin-green.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\_references.js" />
+    <Content Include="Content\css\site.css" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\css\adminlte.css.map" />
+    <Content Include="Content\css\adminlte.min.css.map" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\ionicons.eot" />
+    <Content Include="Content\fonts\ionicons.ttf" />
+    <Content Include="Content\fonts\ionicons.woff" />
+    <Content Include="App_Code\TreeviewCriteria.cshtml" />
+    <Content Include="App_Code\TreeviewCriteriaMenu.cshtml" />
+    <Content Include="App_Code\TreeviewCriteriaMenuAlternatives.cshtml" />
+    <None Include="Content\js\jquery\jquery-1.10.2.intellisense.js" />
+    <Content Include="Content\js\jquery\jquery-1.10.2.js" />
+    <Content Include="Content\js\jquery\jquery-1.10.2.min.js" />
+    <None Include="Content\js\jquery\jquery.validate-vsdoc.js" />
+    <Content Include="Content\js\jquery\jquery.validate.js" />
+    <Content Include="Content\js\jquery\jquery.validate.min.js" />
+    <Content Include="Content\js\jquery\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\js\jquery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Models\AHPModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AHPModel.edmx</DependentUpon>
+      <LastGenOutput>AHPModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\AHPModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AHPModel.edmx</DependentUpon>
+      <LastGenOutput>AHPModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -211,8 +346,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -226,25 +359,46 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_DialogNewPartial.cshtml" />
+    <Content Include="Views\Shared\_LayoutLoggedOff.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\_DialogNewAlternativePartial.cshtml" />
+    <Content Include="Views\Evaluation\Index.cshtml" />
+    <Content Include="Views\Project\_DialogNewCriteriaPartial.cshtml" />
+    <Content Include="Views\Evaluation\_CriteriaMenuPartial.cshtml" />
+    <Content Include="Views\Evaluation\Alternatives.cshtml" />
+    <Content Include="Views\Evaluation\_CriteriaMenuAlternativesPartial.cshtml" />
+    <Content Include="Views\Evaluation\_DialogAlternativeValuesPartial.cshtml" />
+    <Content Include="Views\Evaluation\_AlternativeWithValuesPartial.cshtml" />
+    <Content Include="Views\Project\_DialogDeleteProjectPartial.cshtml" />
+    <Content Include="Views\Project\_DialogDeleteCriteriaPartial.cshtml" />
+    <Content Include="Views\Project\Result.cshtml" />
+    <Content Include="Views\Shared\_ContentHeaderPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\images\" />
+    <Folder Include="ViewModels\Shared\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
+    <EntityDeploy Include="Models\AHPModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AHPModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\AHPModel.edmx.diagram">
+      <DependentUpon>AHPModel.edmx</DependentUpon>
+    </Content>
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Content\js\jquery\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

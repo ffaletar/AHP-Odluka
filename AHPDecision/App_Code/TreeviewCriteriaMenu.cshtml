@@ -1,0 +1,77 @@
+﻿
+@helper GetTreeviewCriteriaMenu(List<AHPDecision.Models.Kriterij> kriteriji, int idPokrenutogKriterija)
+{
+System.Web.Mvc.UrlHelper urlHelper = new System.Web.Mvc.UrlHelper(Request.RequestContext);
+foreach (var kriterij in kriteriji)
+{
+    if (kriterij.obrisan != true)
+    {
+            @*<li class="treeview @(kriterij.id==idPokrenutogKriterija?"active":"")">*@
+            <li class="treeview @(kriterij.id == idPokrenutogKriterija ? "active" : "")">
+
+                <a href="#">
+                    @if (kriterij.Kriterij1.Where(x => x.obrisan != true).Count() > 1)
+                    {
+                        <span onclick="location.href='@urlHelper.Action("Index", "Evaluation", new { id = kriterij.projekt, kriterij = kriterij.id })'">@kriterij.naziv</span>
+                    }
+                    else
+                    {
+                        <span>@kriterij.naziv</span>
+                    }
+                    <i class="fa ion-chevron-right"></i>
+                    <span class="pull-right-container">
+                        @if (kriterij.Kriterij1.Count > 0)
+                        {
+                            <i class="fa fa-angle-left pull-right"></i>
+
+                            if (kriterij.konzistentno == true)
+                            {
+                                <small class="label pull-right bg-green">
+                                    <i class="ion-checkmark"></i>
+                                </small>
+                            }
+                            else
+                            {
+                                <small class="label pull-right bg-red">
+                                    <i class="ion-close"></i>
+                                </small>
+
+                                if (kriterij.Kriterij1.Where(x => x.obrisan != true).Count() == 1)
+                                {
+                                    <small class="label pull-right bg-yellow">
+                                        <i class="ion-android-warning"></i>
+                                    </small>
+                                }
+                            }
+
+
+                        }
+                        @{
+                            double? result = null;
+                            if (kriterij.vrijednost.HasValue)
+                            {
+                                result = Math.Round(kriterij.vrijednost.Value, 2);
+                            }
+                        }
+                        @if (result != null)
+                        {
+                            <small class="label pull-right bg-gray-light" style="color: #1e1d1d;">
+                                @result
+                            </small>
+                        }
+
+
+                    </span>
+                </a>
+
+                @if (kriterij.Kriterij1.Where(x => x.obrisan != true).Count() > 0)
+                {
+                    <ul class="treeview-menu">
+                        @TreeviewCriteriaMenu.GetTreeviewCriteriaMenu(kriterij.Kriterij1.ToList(), idPokrenutogKriterija)
+                    </ul>
+                }
+            </li>
+        }
+
+    }
+}

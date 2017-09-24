@@ -1,0 +1,50 @@
+﻿
+@helper GetTreeviewCriteriaMenuAlternatives(List<AHPDecision.Models.Kriterij> kriteriji, List<AHPDecision.Models.Alternativa> alternative, int idPokrenutogKriterija)
+{
+System.Web.Mvc.UrlHelper urlHelper = new System.Web.Mvc.UrlHelper(Request.RequestContext);
+foreach (var kriterij in kriteriji)
+{
+    if (kriterij.obrisan != true)
+    {
+        <li class="treeview @(kriterij.id == idPokrenutogKriterija ? "menu-open" : "")">
+            <a href="#">
+                <i class="fa ion-chevron-right"></i> 
+                @if (kriterij.Kriterij1.Where(x => x.obrisan != true).Count() > 1)
+                {
+                    <span>@kriterij.naziv</span>
+                }
+                else
+                {
+                    <span onclick="location.href='@urlHelper.Action("Alternatives", "Evaluation", new { projekt = kriterij.projekt, kriterij = kriterij.id })'">@kriterij.naziv</span>
+                }
+                <span class="pull-right-container">
+                    @if (kriterij.Kriterij1.Where(x => x.obrisan != true).Count() > 0)
+                    {
+                        <i class="fa fa-angle-left pull-right"></i>
+                    }
+
+                    @if (kriterij.konzistentneAlternative == true)
+                    {
+                        <small class="label pull-right bg-green">
+                            <i class="ion-checkmark"></i>
+                        </small>
+                    }
+                    else
+                    {
+                        <small class="label pull-right bg-red">
+                            <i class="ion-close"></i>
+                        </small>
+                    }
+                </span>
+            </a>
+
+            @if (kriterij.Kriterij1.Where(x => x.obrisan != true).Count() > 0)
+            {
+                <ul class="treeview-menu" style="@(kriterij.id == idPokrenutogKriterija ? "display: block" : "")">
+                    @TreeviewCriteriaMenuAlternatives.GetTreeviewCriteriaMenuAlternatives(kriterij.Kriterij1.ToList(), alternative, idPokrenutogKriterija)
+                </ul>
+            }
+        </li>
+        }
+    }
+}

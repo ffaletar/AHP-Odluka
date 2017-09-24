@@ -1,0 +1,29 @@
+﻿@model AHPDecision.ViewModels.EvaluationAlternativesViewModel
+
+
+<section class="sidebar col-md-4" style="background-color: #222d32; position:fixed; padding-left: 0px; padding-right: 0px; height: 100%;">
+    <div class="user-panel" style="height:13%;">
+        <h2 style="color: #dbdbdb;">
+            @Model.Projekt.naziv
+        </h2>
+        @if (Model.Projekt.konzistentno == true)
+        {
+            <i class="fa fa-check-circle pull-right"></i>
+        }
+        else
+        {
+            <i class="fa fa-window-close pull-right"></i>
+        }
+    </div>
+    <div class="scroll-main" style="height: 87%; direction: ltr;">
+        <ul class="sidebar-menu tree" data-widget="tree">
+            @if (Model.Kriterij != null)
+            {
+                @TreeviewCriteriaMenuAlternatives.GetTreeviewCriteriaMenuAlternatives(Model.Kriteriji, Model.Alternative, Model.Kriterij.id)
+            }
+        </ul>
+    </div>
+    @*<div class="row">
+        @Html.Partial("_AlternativeWithValuesPartial", Model.AlternativaKriterij)
+    </div>*@
+</section>

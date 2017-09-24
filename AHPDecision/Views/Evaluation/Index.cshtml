@@ -1,0 +1,52 @@
+﻿@model AHPDecision.ViewModels.EvaluationCriteriaViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content" style="padding: 0;">
+    <div class="row">
+        <div id="criteria-menu-partial-container">
+            @Html.Partial("_CriteriaMenuPartial", Model)
+        </div>
+
+        <div class="col-md-8 col-lg-offset-4">
+
+            @{
+                Html.RenderPartial("_ContentHeaderPartial", Model.ContentHeader);
+            }
+
+            <section class="content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        @foreach (AHPDecision.Models.UsporedbaKriterija usporedba in Model.ListaUsporedaba)
+                        {
+                            <div class="box box-solid">
+                                <div class="box-body">
+                                    <h4 style="background-color:#f7f7f7; font-size: 18px; text-align: center; padding: 7px 10px; margin-top: 0;">
+                                        @usporedba.Kriterij.naziv - @usporedba.Kriterij3.naziv
+                                    </h4>
+                                    <div class="media" style="text-align:center;">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-info @(usporedba.vrijednost==0.11?"selected":"")" onclick="changeFactor(@usporedba.kriterij1, @usporedba.kriterij2, 0.11, @Model.Projekt.id)">-9</button>
+                                            <button type="button" class="btn btn-info @(usporedba.vrijednost==0.14?"selected":"")" onclick="changeFactor(@usporedba.kriterij1, @usporedba.kriterij2, 0.14, @Model.Projekt.id)">-7</button>
+                                            <button type="button" class="btn btn-info @(usporedba.vrijednost==0.2?"selected":"")" onclick="changeFactor(@usporedba.kriterij1, @usporedba.kriterij2, 0.2, @Model.Projekt.id)">-5</button>
+                                            <button type="button" class="btn btn-info @(usporedba.vrijednost==0.33?"selected":"")" onclick="changeFactor(@usporedba.kriterij1, @usporedba.kriterij2, 0.33, @Model.Projekt.id)">-3</button>
+                                            <button type="button" class="btn btn-info @(usporedba.vrijednost==1?"selected":"")" onclick="changeFactor(@usporedba.kriterij1, @usporedba.kriterij2, 1, @Model.Projekt.id)">1</button>
+                                            <button type="button" class="btn btn-info @(usporedba.vrijednost==3?"selected":"")" onclick="changeFactor(@usporedba.kriterij1, @usporedba.kriterij2, 3, @Model.Projekt.id)">3</button>
+                                            <button type="button" class="btn btn-info @(usporedba.vrijednost==5?"selected":"")" onclick="changeFactor(@usporedba.kriterij1, @usporedba.kriterij2, 5, @Model.Projekt.id)">5</button>
+                                            <button type="button" class="btn btn-info @(usporedba.vrijednost==7?"selected":"")" onclick="changeFactor(@usporedba.kriterij1, @usporedba.kriterij2, 7, @Model.Projekt.id)">7</button>
+                                            <button type="button" class="btn btn-info @(usporedba.vrijednost==9?"selected":"")" onclick="changeFactor(@usporedba.kriterij1, @usporedba.kriterij2, 9, @Model.Projekt.id)">9</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+
+

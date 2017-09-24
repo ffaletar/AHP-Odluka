@@ -3,42 +3,167 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    <title>@ViewBag.Title AHP Decision</title>
+    @Styles.Render("~/Content/css/Site")
+    @Styles.Render("~/Content/css/Bootstrap")
+    @Styles.Render("~/Content/css/AdminLTE")
+    @Styles.Render("~/Content/css/FontCSS")
+    @Styles.Render("~/Content/css/Slider")
+    @Styles.Render("~/Content/css/Skin")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+<body class="layout-top-nav skin-purple skin-green fixed" style="height: auto; min-height: 100%;" cz-shortcut-listen="true">
+    <div class="wrapper" style="height: auto; min-height: 100%;">
+
+        <header class="main-header">
+
+
+
+            <nav class="navbar navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a href="../../index2.html" class="navbar-brand"><b>AHP</b>Odluka</a>
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </div>
+
+
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a href="/Home/Index"> <i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <!-- User Account: style can be found in dropdown.less -->
+                            <li class="dropdown user user-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="hidden-xs">@User.Identity.Name</span>
+                                </a>
+                                <ul class="dropdown-menu col-lg-12">
+
+                                    <li class="box box-widget widget-user">
+                                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                                        <div class="widget-user-header bg-gray-light">
+                                            <h3 class="widget-user-username text-blue">@User.Identity.Name</h3>
+                                            <h5 class="widget-user-desc">Student</h5>
+                                            <i class="ion ion-calendar"> </i><small>  Član od 20.07.2017.</small>
+                                        </div>
+                                    </li>
+                                    <li class="box box-widget widget-user-2">
+                                        <div class="box-footer no-padding">
+                                            <ul class="nav nav-stacked">
+                                                <li><a href="/Home/Index" style="color: gray;">Projects <span style="color: gray;" class="pull-right badge bg-blue">31</span></a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                    <!-- Menu Footer-->
+                                    <li class="user-footer">
+                                        <div class="pull-right">
+                                            <a href="@Url.Action("LogOff", "Account")" class="btn btn-default btn-flat">Sign out</a>
+                                        </div>
+
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" data-toggle="control-sidebar"><i class="fa ion-monitor"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- /.navbar-custom-menu -->
+                </div>
+                <!-- /.container-fluid -->
+            </nav>
+        </header>
+
+        <div class="content-wrapper" style="min-height: 916px;">
+            @RenderBody()
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 2.4.0
+            </div>
+            <strong>Copyright © 2017 <a href="https://adminlte.io">TO projekt - Filip Faletar</a>.</strong> All rights
+            reserved.
         </footer>
+
+        <aside class="control-sidebar control-sidebar-dark col-lg-6">
+            <!-- Home tab content -->
+            <div class="tab-pane" id="control-sidebar-home-tab">
+                <h3 class="control-sidebar-heading">Recent Activity</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                                <p>Will be 23 on April 24th</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                                <p>New phone +1(800)555-1234</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                                <p>nora@example.com</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                                <p>Execution time 5 seconds</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+            </div>
+        </aside>
+
+
     </div>
 
+    
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/AdminLTE")
+    @Scripts.Render("~/bundles/App")
+    @Scripts.Render("~/bundles/Site")
+    @Scripts.Render("~/bundles/Evaluation")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/Slider")
     @RenderSection("scripts", required: false)
 </body>
 </html>

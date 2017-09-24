@@ -1,0 +1,26 @@
+﻿@model int
+
+<div class="modal-deleteProject">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">Brisanje projekta</h4>
+        </div>
+        <form role="form" action="/Project/DeleteProject" method="post">
+            <div class="modal-body">
+                <input type="hidden" id="projectId" name="id" value="@Model" />
+                <!-- text input -->
+                <h3>Jeste li sigurni da želite ukloniti projekt?</h3>
+                <small>Projekt više neće biti dostupan</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Odustani</button>
+                <input type="submit" class="btn btn-success" value="Ukloni" />
+            </div>
+        </form>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

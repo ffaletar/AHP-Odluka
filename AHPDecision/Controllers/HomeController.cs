@@ -1,6 +1,10 @@
-﻿using System;
+﻿using AHPDecision.Models;
+using AHPDecision.ViewModels;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,23 +12,16 @@ namespace AHPDecision.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
-            return View();
-        }
+            AHPEntities4 db = new AHPEntities4();
+            var userId = User.Identity.GetUserId();
+            IEnumerable<Projekt> projekti = db.Projekts.Where(c => (c.korisnik == userId && c.obrisan != true)).OrderByDescending(c => c.zadnjaPromjena).ToList();
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            HomeViewModel homeViewModel = new HomeViewModel(projekti);
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(homeViewModel);
         }
     }
 }

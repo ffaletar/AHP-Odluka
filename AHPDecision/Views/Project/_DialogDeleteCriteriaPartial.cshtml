@@ -1,0 +1,25 @@
+﻿
+<div class="modal-deleteCriteria">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">Brisanje projekta</h4>
+        </div>
+        <form role="form" action="/Project/DeleteCriteria" method="post">
+            <div class="modal-body">
+                <input type="hidden" id="deleteCriteriaId" name="id" />
+                <!-- text input -->
+                <h3>Jeste li sigurni da želite izbrisati kriterij?</h3>
+                <small>Kriterij i svi njegovi kriteriji više neće biti dostupni</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Odustani</button>
+                <input type="submit" class="btn btn-success" value="Izbriši" />
+            </div>
+        </form>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

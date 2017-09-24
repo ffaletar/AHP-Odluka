@@ -1,0 +1,35 @@
+﻿@model string[]
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">@Model[0]</h4>
+        </div>
+        <form role="form" action="/Project/AddProject" method="post">
+
+            <div class="modal-body">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@Model[1]</label>
+                    <input type="text" class="form-control" name="naziv" placeholder="Unesi naziv projekta">
+                </div>
+                <!-- textarea -->
+                <div class="form-group">
+                    <label>@Model[2]</label>
+                    <textarea class="form-control" name="opis" style="max-width: 100%;max-height: 200px;" rows="3" placeholder="Unesi opis projekta"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Zatvori</button>
+                <input type="submit" class="btn btn-success">Spremi</input>
+            </div>
+        </form>
+
+
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

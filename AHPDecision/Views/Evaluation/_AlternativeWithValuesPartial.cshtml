@@ -1,0 +1,27 @@
+﻿@model List<AHPDecision.Models.AlternativaKriterij>
+
+<div class="row scroll-main" style="height: 45%; direction: ltr;">
+    <ul class="todo-list ui-sortable" style="color: #f1f1f1; padding: 0px; height: 100%;">
+        @if (Model.Count() == 0)
+        {
+            <div class="text-center">
+                <h3>Trenutno ne postoje alternative</h3>
+            </div>
+        }
+        else
+        {
+            foreach (AHPDecision.Models.AlternativaKriterij alternativaKriterij in Model)
+            {
+                <li class="header list-view-gray">
+                    <i class="fa ion-arrow-right-b"></i>
+                    <span class="text">@alternativaKriterij.Alternativa1.naziv</span>
+                    @if (alternativaKriterij.stvarnaVrijednost != null)
+                    {
+                        <small class="label label-info"><i class="fa fa-clock-o"></i>@alternativaKriterij.stvarnaVrijednost</small>
+                    }
+                </li>
+            }
+        }
+    </ul>
+</div>
+

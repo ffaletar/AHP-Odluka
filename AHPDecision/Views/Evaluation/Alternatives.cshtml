@@ -1,0 +1,110 @@
+﻿@model AHPDecision.ViewModels.EvaluationAlternativesViewModel
+@{
+    ViewBag.Title = "Alternatives";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content" style="padding:0;">
+    <div class="row">
+        <div id="criteria-alternatives-menu-partial-container">
+            @Html.Partial("_CriteriaMenuAlternativesPartial", Model)
+        </div>
+        <div class="col-md-8 col-lg-offset-4">
+
+            <section class="content-header">
+                <h1>
+                    @Model.Kriterij.naziv
+                </h1>
+
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Početna</a></li>
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Evaluacija</a></li>
+                    <li class="active">@Model.Projekt.naziv</li>
+                    <li class="active">@Model.Kriterij.naziv</li>
+                </ol>
+            </section>
+
+            <section class="content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        @foreach (var kombinacijaAlternativa in Model.ListaKombinacijaAlternativa)
+                        {
+
+                            <div class="box-body">
+                                <ul class="products-list product-list-in-box">
+                                    <li class="item col-sm-12">
+                                        <div class="row">
+                                            <div class="product-info col-sm-5" style="display: inline-block; margin-left: 30px; margin-right: 30px;">
+                                                <div class="row">
+                                                    <a href="javascript:void(0)" class="product-title">
+                                                        <h4 class="pull-left">@kombinacijaAlternativa.Alternativa1.naziv</h4>
+                                                        @*@if (kombinacijaAlternativa.Alternativa1.pravaVrijednost != null)
+                                                        {
+                                                            @*<span class="label label-warning pull-right">@kombinacijaAlternativa.Alternativa1.AlternativaKriterijs</span>
+                                                        }*@
+                                                    </a>
+                                                </div>
+                                                <div class="row">
+                                                    <p class="product-description">
+                                                        @kombinacijaAlternativa.Alternativa1.opis
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-info col-sm-5 pull-right" style="display: inline-block;  margin-left: 30px; margin-right: 30px;">
+                                                <div class="row">
+                                                    <a href="javascript:void(0)" class="product-title">
+                                                        <h4 class="pull-right">@kombinacijaAlternativa.Alternativa2.naziv</h4>
+                                                        @*@if (kombinacijaAlternativa.Alternativa1.pravaVrijednost != null)
+                                                        {
+                                                            @*<span class="label label-warning pull-left">@kombinacijaAlternativa.Alternativa2.pravaVrijednost</span>
+                                                        }*@
+                                                    </a>
+                                                </div>
+                                                <div class="row">
+                                                    <p class="product-description text-right">
+                                                        @kombinacijaAlternativa.Alternativa2.opis
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            @{ 
+                                                AHPDecision.Models.UsporedbaAlternativaPremaKriteriju usporedbeAlternativaPremaKriterijima = Model.UsporedbaAlternativaPremaKriteriju.Where(x => ((x.alternativa1 == kombinacijaAlternativa.Alternativa1.id && x.alternativa2 == kombinacijaAlternativa.Alternativa2.id) || (x.alternativa2 == kombinacijaAlternativa.Alternativa2.id && x.alternativa1 == kombinacijaAlternativa.Alternativa1.id))).SingleOrDefault();
+                                                double? vrijednost = -1;
+                                                if (usporedbeAlternativaPremaKriterijima != null)
+                                                {
+                                                    vrijednost = usporedbeAlternativaPremaKriterijima.vrijednost;
+                                                }
+                                            }
+                                            <div class="media" style="text-align:center;">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-info @(vrijednost==0.11?"selected":"")" onclick="changeAlternativesValue(@kombinacijaAlternativa.Alternativa1.id, @kombinacijaAlternativa.Alternativa2.id, @Model.Kriterij.id, 0.11, @Model.Projekt.id)">-9</button>
+                                                    <button type="button" class="btn btn-info @(vrijednost==0.14?"selected":"")" onclick="changeAlternativesValue(@kombinacijaAlternativa.Alternativa1.id, @kombinacijaAlternativa.Alternativa2.id, @Model.Kriterij.id, 0.14, @Model.Projekt.id)">-7</button>
+                                                    <button type="button" class="btn btn-info @(vrijednost==0.2?"selected":"")" onclick="changeAlternativesValue(@kombinacijaAlternativa.Alternativa1.id, @kombinacijaAlternativa.Alternativa2.id, @Model.Kriterij.id, 0.2, @Model.Projekt.id)">-5</button>
+                                                    <button type="button" class="btn btn-info @(vrijednost==0.33?"selected":"")" onclick="changeAlternativesValue(@kombinacijaAlternativa.Alternativa1.id, @kombinacijaAlternativa.Alternativa2.id, @Model.Kriterij.id, 0.33, @Model.Projekt.id)">-3</button>
+                                                    <button type="button" class="btn btn-info @(vrijednost==1?"selected":"")" onclick="changeAlternativesValue(@kombinacijaAlternativa.Alternativa1.id, @kombinacijaAlternativa.Alternativa2.id, @Model.Kriterij.id, 1, @Model.Projekt.id)">1</button>
+                                                    <button type="button" class="btn btn-info @(vrijednost==3?"selected":"")" onclick="changeAlternativesValue(@kombinacijaAlternativa.Alternativa1.id, @kombinacijaAlternativa.Alternativa2.id, @Model.Kriterij.id, 3, @Model.Projekt.id)">3</button>
+                                                    <button type="button" class="btn btn-info @(vrijednost==5?"selected":"")" onclick="changeAlternativesValue(@kombinacijaAlternativa.Alternativa1.id, @kombinacijaAlternativa.Alternativa2.id, @Model.Kriterij.id, 5, @Model.Projekt.id)">5</button>
+                                                    <button type="button" class="btn btn-info @(vrijednost==7?"selected":"")" onclick="changeAlternativesValue(@kombinacijaAlternativa.Alternativa1.id, @kombinacijaAlternativa.Alternativa2.id, @Model.Kriterij.id, 7, @Model.Projekt.id)">7</button>
+                                                    <button type="button" class="btn btn-info @(vrijednost==9?"selected":"")" onclick="changeAlternativesValue(@kombinacijaAlternativa.Alternativa1.id, @kombinacijaAlternativa.Alternativa2.id, @Model.Kriterij.id, 9, @Model.Projekt.id)">9</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+@if (Model.Kriterij.UsporedbaAlternativaPremaKriterijus.Where(x => x.vrijednost == null).ToList().Count() > 0)
+{
+    <div class="modal fade out" id="modal-default">
+        @Html.Partial("_DialogAlternativeValuesPartial", Model.Kriterij.id)
+    </div>
+}

@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title AHP Decision</title>
+    @Styles.Render("~/Content/css/Site")
+    @Styles.Render("~/Content/css/Bootstrap")
+    @Styles.Render("~/Content/css/AdminLTE")
+    @Styles.Render("~/Content/css/FontCSS")
+    @Styles.Render("~/Content/css/Skin")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body class="hold-transition login-page">
+    <div>
+        @RenderBody()
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/AdminLTE")
+    @Scripts.Render("~/bundles/App")
+    @Scripts.Render("~/bundles/Site")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

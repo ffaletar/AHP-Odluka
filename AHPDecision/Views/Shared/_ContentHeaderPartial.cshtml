@@ -1,0 +1,29 @@
+﻿@model AHPDecision.ViewModels.Helpers.ContentHeader
+
+@if (Model != null)
+{
+    <section class="content-header">
+
+        <h1>
+            @if (Model.MainTitle != null)
+            {
+                @Model.MainTitle
+            }
+            @if (Model.SmallTitle != null)
+            {
+                <small>@Model.SmallTitle</small>
+            }
+        </h1>
+
+        <ol class="breadcrumb">
+            @if (Model.Path != null)
+            {
+                foreach (var pathElement in Model.Path)
+                {
+                    <li><a href="@pathElement.Item2"><i class="fa @pathElement.Item1"></i> @pathElement.Item3</a></li>
+                }
+            }
+        </ol>
+    </section>
+}
+

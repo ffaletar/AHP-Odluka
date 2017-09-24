@@ -1,0 +1,35 @@
+﻿@model int
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <h4 id="parentName"></h4>
+        </div>
+        <form role="form" action="/Project/AddCriteria" method="post">
+            <div class="modal-body">
+                <input type="hidden" id="projectId" name="projectId" value="@Model" />
+                <input type="hidden" id="parentId" name="parentId" />
+
+                <!-- text input -->
+                <div class="form-group">
+                    <label>Naziv</label>
+                    <input type="text" class="form-control" name="name" placeholder="Unesi naziv kriterija">
+                </div>
+                <!-- textarea -->
+                <div class="form-group">
+                    <label>Opis</label>
+                    <textarea class="form-control" name="info" style="max-width: 100%;max-height: 200px;" rows="3" placeholder="Unesi opis kriterija"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Zatvori</button>
+                <input type="submit" class="btn btn-success" value="Spremi" />
+            </div>
+        </form>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

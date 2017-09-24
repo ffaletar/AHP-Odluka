@@ -1,0 +1,62 @@
+﻿@helper GetTreeView(List<AHPDecision.Models.Kriterij> kriteriji)
+{
+System.Web.Mvc.UrlHelper urlHelper = new System.Web.Mvc.UrlHelper(Request.RequestContext);
+foreach (var kriterij in kriteriji)
+{
+    if (kriterij.obrisan != true)
+    {
+        <div class="row" style="height: 60px!important; padding-top: 20px;">
+            <div class="col-lg-3">
+                <span class="text">@kriterij.naziv</span>
+            </div>
+            <div class="col-lg-4" style="overflow: hidden;">
+                <p class="kriteriji_list_element_div_opis" style="overflow: hidden;">@kriterij.opis</p>
+
+            </div>
+            <div class="col-lg-2">
+                @{
+                    double? vrijednost = null;
+                    if (kriterij.vrijednost.HasValue)
+                    {
+                        vrijednost = Math.Round(kriterij.vrijednost.Value, 2) * 100;
+                    }
+                }
+                @if (vrijednost != null)
+                {
+                    <div class="progress progress-xs" style="background-image: linear-gradient(to bottom, #696767 0%, #333333 100%);">
+                        <div class="progress-bar progress-bar-red" style="width: @vrijednost%"></div>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-1">
+                @if (vrijednost != null)
+                {
+                    <span class="badge bg-red">@vrijednost%</span>
+                }
+            </div>
+            <div>
+                <a class="btn  btn-default" data-toggle="modal" data-target="#modal-newCriteria" title="Dodaj podkriterij" onclick='FillUpNewCriteriaPartial("@kriterij.naziv", "@kriterij.id");' unselectable="on">
+                    <i class="fa fa-plus"></i>
+                </a>
+                <a class="btn  btn-default" title="Ukloni kriterij" onclick="ShowModalDeleteCriteria(@kriterij.id)" unselectable="on">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+                @if (kriterij.Kriterij1 != null && kriterij.Kriterij1.Where(x => x.obrisan != true).Count() > 0)
+                {
+                    var link = "/Evaluation/Index?id=" + kriterij.projekt + "&kriterij=" + kriterij.id;
+                    <a href=@link class="btn btn-foursquare" title="Evaluiraj" unselectable="on">
+                        <i class="fa fa-play"></i>
+                    </a>
+                }
+            </div>
+        </div>
+
+        if (kriterij.Kriterij1.Where(x => x.obrisan != true).Count() > 0)
+        {
+            <ul class="todo-list ui-sortable" style="background-color: #dbd8d8;">
+                @TreeviewCriteria.GetTreeView(kriterij.Kriterij1.ToList())
+            </ul>
+        }
+    }
+}
+}
